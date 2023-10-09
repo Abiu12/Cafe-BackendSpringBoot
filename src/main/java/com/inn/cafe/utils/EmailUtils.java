@@ -1,8 +1,11 @@
 package com.inn.cafe.utils;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +33,15 @@ public class EmailUtils {
             cc[i] = ccList.get(i);
         }
         return cc;
+    }
+
+    public void forgotMail(String to, String subject, String password) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("19161268@itoaxaca.edu.mx");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText("<p><b>Your Login details for Cafe Management System</b><br><b>Email: </b> " + to + " <br><b>Password: </b> " + password + "<br><a href=\"http://localhost:4200/\">Click here to login</a></p>");
+
+        emailSender.send(message);
     }
 }
